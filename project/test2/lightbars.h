@@ -12,6 +12,9 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
+
+    int usedFlag = false;
+    int state = THREE_FREE;
 //public slots:
 //    void lbSet(int _state);
 
@@ -33,9 +36,10 @@ private:
     //bounding rect parameters
     int bound_x;
     int bound_y;
+    int bias = 0;
     QColor color;
 
-    int state = THREE_FREE;
+
     int lst_state = state;
     //TODO ADD AN INDEX FOR LIGHTSBAR
 };

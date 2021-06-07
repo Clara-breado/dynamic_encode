@@ -7,6 +7,7 @@
 #include "train.h"
 #include "lightbars.h"
 #include "lights.h"
+#include "logic_lb.h"
 
 namespace Ui {
 class Widget;
@@ -20,6 +21,8 @@ public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
 
+    logic_lb *lb[3];
+
 private slots:
     void on_pushButton_clicked();
 
@@ -31,8 +34,11 @@ private:
     Ui::Widget *ui;
     QGraphicsScene *scene;
     train *mytrain;
-    lightbars *bar[4];
-    lights *light[4];
+    lightbars *bar[8];
+    lights *light[8];
+
+
+
     QTimer timer;
 };
 

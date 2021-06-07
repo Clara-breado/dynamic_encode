@@ -27,6 +27,7 @@ CONFIG += c++11
 SOURCES += \
         lightbars.cpp \
         lights.cpp \
+        logic_lb.cpp \
         main.cpp \
         train.cpp \
         widget.cpp
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
         lightbars.h \
         lights.h \
+        logic_lb.h \
         setting.h \
         train.h \
         widget.h

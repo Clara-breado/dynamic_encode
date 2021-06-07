@@ -9,31 +9,56 @@ Widget::Widget(QWidget *parent) :
 
     scene = new QGraphicsScene;
     mytrain = new train(0);
-    bar[0] = new lightbars(0);
-    bar[1] = new lightbars(200);
-    bar[2] = new lightbars(400);
-    bar[3] = new lightbars(600);
+//    bar[0] = new lightbars(0);
+//    bar[1] = new lightbars(200);
+//    bar[2] = new lightbars(400);
+//    bar[3] = new lightbars(600);
+//    bar[4] = new lightbars(800);
+//    bar[5] = new lightbars(1000);
+//    bar[6] = new lightbars(1200);
+//    bar[7] = new lightbars(1400);
+
+    lb[0] = new logic_lb(nullptr,0);
+    lb[1] = new logic_lb(nullptr,200);
+    lb[2] = new logic_lb(nullptr,400);
 
     light[0] = new lights(0);
     light[1] = new lights(200);
     light[2] = new lights(400);
     light[3] = new lights(600);
+    light[4] = new lights(800);
+    light[5] = new lights(1000);
+    light[6] = new lights(1200);
+    light[7] = new lights(1400);
 
-    scene->setSceneRect(-300, -300, 1000, 600); //meaning?
-//    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene->setSceneRect(-300, -300, 1600, 800); //meaning?
     scene->addItem(mytrain);
-    scene->addItem(bar[0]);
-    scene->addItem(bar[1]);
-    scene->addItem(bar[2]);
-    scene->addItem(bar[3]);
+//    scene->addItem(bar[0]);
+//    scene->addItem(bar[1]);
+//    scene->addItem(bar[2]);
+//    scene->addItem(bar[3]);
+//    scene->addItem(bar[4]);
+//    scene->addItem(bar[5]);
+//    scene->addItem(bar[6]);
+//    scene->addItem(bar[7]);
+    scene->addItem(lb[0]->view_lb);
+    scene->addItem(lb[1]->view_lb);
+    scene->addItem(lb[2]->view_lb);
+
 
     scene->addItem(light[0]);
     scene->addItem(light[1]);
     scene->addItem(light[2]);
     scene->addItem(light[3]);
+    scene->addItem(light[4]);
+    scene->addItem(light[5]);
+    scene->addItem(light[6]);
+    scene->addItem(light[7]);
 
 
     QObject::connect(&timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    QObject::connect(&timer, SIGNAL(timeout()), lb[1], SLOT(timerTest()));    //todo：能让函数一直运行！
+    QObject::connect(lb[1],SIGNAL(stateChanged(int)),lb[2],SLOT(toChangestate(int)));
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -43,6 +68,7 @@ Widget::Widget(QWidget *parent) :
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 //    ui->graphicsView->resize(800, 600);
     ui->graphicsView->show();
+
 
     //todo: connect--> lb has car-->emit signal, left lb send signal, right lb recive signal and turn into orange
     //connect(bar[0],SIGNAL(lightbars::lbChange(int)),bar[1],SLOT(lightbars::lbSet(int)));

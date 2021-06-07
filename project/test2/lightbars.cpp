@@ -24,42 +24,31 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-
-//    bound_x = pos_x;
-//    painter->setBrush(scene()->collidingItems(this).isEmpty() ? Qt::green : Qt::red);
-
-//    //left one
-//    bound_x = pos_x-200;
-//    painter->setBrush(scene()->collidingItems(this).isEmpty() ? Qt::green : Qt::yellow);
-
-
-
-    bound_x = pos_x;
+    bias = 0;
+    bound_x = pos_x+bias*bar_width;
     if(scene()->collidingItems(this).size()>=3){
-        painter->setBrush(Qt::red);
+        color = Qt::red;
+        this->usedFlag = true;
     }else{
+        this->usedFlag = false;
+        bias++;
         bound_x = pos_x+200;
         if(scene()->collidingItems(this).size()>=2){
-            painter->setBrush(Qt::yellow);
+            color.setRgb(255,180,0);
         }else{
-            painter->setBrush(Qt::green);
+//            bias++;
+//            bound_x = pos_x+400;
+//            if(scene()->collidingItems(this).size()>=2){
+//                color.setRgb(255,255,0);
+//            }else{
+                color.setRgb(0,255,0);
+//            }
+
         }
     }
-
-
-    //大胆的想法，用不同的bounding rect替代不同长度的空闲区间是否有车，通过与本对象的绝对位置来判断有几个空闲区间
-//    if(scene()->collidingItems(this).isEmpty()){
-//        if(state == ONE_FREE){
-//            painter->setBrush(Qt::yellow);
-//        }else {
-//            painter->setBrush(Qt::green);
-//        }
-//    }else{
-//        painter->setBrush(Qt::red);
-//        //emit
-//        emit lbChange(ONE_FREE);
-
-//    }
+    painter->setBrush(color);                                           
+    painter->drawRect(pos_x,pos_y,bar_width-2,bar_height);
+    painter->setBrush(color);
     painter->drawRect(pos_x,pos_y,bar_width-2,bar_height);
 
 //    //bouding rect

@@ -44,7 +44,7 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
         }
     }
-    painter->setBrush(color);
+    painter->setBrush(color);                                           
     painter->drawRect(pos_x,pos_y,bar_width-2,bar_height);
     painter->setBrush(color);
     painter->drawRect(pos_x,pos_y,bar_width-2,bar_height);

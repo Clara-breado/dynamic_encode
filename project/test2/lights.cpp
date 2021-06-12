@@ -4,9 +4,8 @@
 #include <QStyleOption>
 #include <QGraphicsScene>
 
-lights::lights(const int& _pos_x):pos_x(_pos_x)
+lights::lights(const int& _pos_x,const int &_pos_y):pos_x(_pos_x),pos_y(_pos_y)
 {
-    qDebug()<<"lightbars borned"<<endl;
 }
 
 QRectF lights::boundingRect() const
@@ -29,7 +28,7 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
     painter->setBrush(Qt::green);
     painter->drawEllipse(pos_x,pos_y,20,20);
-    painter->setBrush(Qt::green);
+    painter->setBrush(Qt::black);
     painter->drawEllipse(pos_x+20,pos_y,20,20);
 
     painter->setBrush(Qt::black);

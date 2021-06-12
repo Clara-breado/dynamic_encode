@@ -6,4 +6,8 @@
 #define THREE_FREE 3
 #define CLOSED -1
 
+//sys parameter
+#define LB_NUM 8;
+#define SIGNAL_NUM 8;
+
 #endif // SETTING_H

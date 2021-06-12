@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,6 +28,8 @@ CONFIG += c++11
 SOURCES += \
         lightbars.cpp \
         lights.cpp \
+        logic_lb.cpp \
+        logic_train.cpp \
         main.cpp \
         train.cpp \
         widget.cpp
@@ -34,6 +37,8 @@ SOURCES += \
 HEADERS += \
         lightbars.h \
         lights.h \
+        logic_lb.h \
+        logic_train.h \
         setting.h \
         train.h \
         widget.h

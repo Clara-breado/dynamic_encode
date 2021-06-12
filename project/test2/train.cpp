@@ -4,9 +4,9 @@
 #include <QStyleOption>
 #include <QGraphicsScene>
 
-train::train(const int& _pos_x):pos_x(_pos_x)
+train::train(const int& _pos_x,const int& _pos_y):pos_x(_pos_x),pos_y(_pos_y)
 {
-   qDebug()<<"my train borned"<<endl;
+   setY(pos_x);
    setY(pos_y);
    setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 }
@@ -15,10 +15,10 @@ train::train(const int& _pos_x):pos_x(_pos_x)
 QRectF train::boundingRect() const
 {
     qreal adjust = 0.5;
-//    return QRectF(pos_x-adjust,pos_y-adjust,
-//           36+adjust,65+adjust);
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 65 + adjust);
+    return QRectF(pos_x-adjust,pos_y-adjust,
+           40+adjust,25+adjust);
+//    return QRectF(-18 - adjust, -22 - adjust,
+//                  36 + adjust, 65 + adjust);
 }
 //! [1]
 
@@ -31,10 +31,11 @@ void train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 
     painter->setBrush(Qt::yellow);
-    painter->drawRect(QRectF(-10,20,40,25));
+//    painter->drawRect(QRectF(-10,20,40,25));
+    painter->drawRect(pos_x,pos_y,40,25);
 
-    QPixmap img1;
-    painter->drawPixmap(-10,-20,40,25,img1);
+//    QPixmap img1;
+//    painter->drawPixmap(-10,-20,40,25,img1);
 
 //    // Body
 //    painter->setBrush(color);

@@ -5,7 +5,7 @@
 class lights : public QGraphicsItem
 {
 public:
-    lights(const int& _pos_x = 0);
+    lights(const int& _pos_x = 0,const int &_pos_y = 110);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -22,6 +22,7 @@ private:
     qreal mouseEyeDirection;
     int pos_x;
     int pos_y = 110;
+    int light_type = 0;//0,1,2
 
 //    用宏定义来统一
 //    int state;

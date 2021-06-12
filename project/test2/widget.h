@@ -4,9 +4,14 @@
 #include <QWidget>
 #include <QTimer>
 #include <QGraphicsScene>
+#include <QAxObject>
+#include <QDebug>
 #include "train.h"
 #include "lightbars.h"
 #include "lights.h"
+#include "logic_lb.h"
+#include "logic_train.h"
+#include "setting.h"
 
 namespace Ui {
 class Widget;
@@ -20,6 +25,9 @@ public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
 
+    logic_lb *lb[55];
+    logic_train *train_1;
+
 private slots:
     void on_pushButton_clicked();
 
@@ -27,12 +35,16 @@ private slots:
 
     void on_stop_btn_clicked();
 
+    void on_zx_send_clicked();
+
 private:
+    void getStaticData();
     Ui::Widget *ui;
     QGraphicsScene *scene;
     train *mytrain;
-    lightbars *bar[8];
-    lights *light[8];
+    lightbars *bar[50];
+    lights *light[9];
+    QString filePath = "G:\\gradethree\\static_db.xlsx";
     QTimer timer;
 };
 

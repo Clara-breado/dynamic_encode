@@ -7,7 +7,7 @@
 class train : public QGraphicsItem
 {
 public:
-    train(const int& _pos_x = 0);
+    train(const int& _pos_x = 0,const int& _pos_y = 100);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

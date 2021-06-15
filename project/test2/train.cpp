@@ -6,8 +6,8 @@
 
 train::train(const int& _pos_x,const int& _pos_y):pos_x(_pos_x),pos_y(_pos_y)
 {
-   setY(pos_x);
-   setY(pos_y);
+//   setX(pos_x);
+//   setY(pos_y);
    setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 }
 
@@ -87,9 +87,10 @@ void train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 void train::advance(int phase){
     if(!phase) return;
-    pos_x += 1;
+    //pos_x += 1;
     //setPos(pos_x,pos_y);
 
+    //setX(pos_x);
     setX(this->pos().x()+1);
     //timeLine->start();
 }

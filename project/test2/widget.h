@@ -11,6 +11,7 @@
 #include "lights.h"
 #include "logic_lb.h"
 #include "logic_train.h"
+#include "logic_light.h"
 #include "setting.h"
 
 namespace Ui {
@@ -26,6 +27,7 @@ public:
     ~Widget();
 
     logic_lb *lb[55];
+    logic_light *lt[50];
     logic_train *train_1;
 
 private slots:
@@ -37,14 +39,16 @@ private slots:
 
     void on_zx_send_clicked();
 
+    void on_zx_recieve_clicked();
+
 private:
     void getStaticData();
     Ui::Widget *ui;
     QGraphicsScene *scene;
     train *mytrain;
     lightbars *bar[50];
-    lights *light[9];
-    QString filePath = "G:\\gradethree\\static_db.xlsx";
+    lights *light[40];
+    QString filePath = "G:\\gradethree\\static_db_1.xlsx";
     QTimer timer;
 };
 

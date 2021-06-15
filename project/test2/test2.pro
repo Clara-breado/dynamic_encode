@@ -29,6 +29,7 @@ SOURCES += \
         lightbars.cpp \
         lights.cpp \
         logic_lb.cpp \
+        logic_light.cpp \
         logic_train.cpp \
         main.cpp \
         train.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
         lightbars.h \
         lights.h \
         logic_lb.h \
+        logic_light.h \
         logic_train.h \
         setting.h \
         train.h \

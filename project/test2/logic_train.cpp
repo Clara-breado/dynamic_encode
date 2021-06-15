@@ -6,7 +6,13 @@ logic_train::logic_train(QObject *parent,int _pox_x,int _pos_y) : QObject(parent
 }
 
 void logic_train::enterQD(){
-    emit sendPos(this->view_train->x(),this->view_train->y());
+    pos_x = this->view_train->pos_x;
+    int x = this->view_train->mapToScene(this->view_train->pos().x(),this->view_train->pos().y()).x();
+    int y = this->view_train->mapToScene(this->view_train->pos().x(),this->view_train->pos().y()).y();
+
+    emit sendPos(this->view_train->pos().x(),this->view_train->pos().y());
+    emit sendPoint(this->view_train->pos());
+    //emit sendPos(this->view_train->x(),this->view_train->y());
 }
 
 void logic_train::timerStart(){

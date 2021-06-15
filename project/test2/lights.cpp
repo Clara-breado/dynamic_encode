@@ -4,8 +4,11 @@
 #include <QStyleOption>
 #include <QGraphicsScene>
 
-lights::lights(const int& _pos_x,const int &_pos_y):pos_x(_pos_x),pos_y(_pos_y)
-{
+lights::lights(const int& _pos_x,const int &_pos_y,const int &_light_type,const int &_light_dir):pos_x(_pos_x),pos_y(_pos_y),light_type(_light_type),light_dir(_light_dir)
+{   
+    if(light_dir==0){
+        stick_bias = 40;
+    }
 }
 
 QRectF lights::boundingRect() const
@@ -23,18 +26,85 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     Q_UNUSED(widget)
 
     //bouding rect
-    painter->setPen(QPen(Qt::black,1,Qt::DotLine,Qt::SquareCap,Qt::MiterJoin));
-    painter->drawRect(QRectF(pos_x,pos_y,40,30));
+//    painter->setPen(QPen(Qt::black,1,Qt::DotLine,Qt::SquareCap,Qt::MiterJoin));
+//    painter->drawRect(QRectF(pos_x,pos_y,40,30));
 
-    painter->setBrush(Qt::green);
+
+    l = Qt::gray;
+    r = Qt::gray;
+
+    if(this->light_type==0){
+        switch (this->mz-1) {
+        case 0:{
+            l = Qt::red;
+            r = Qt::black;
+            break;
+        }
+        case 1:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
+        case 2:{
+            l = Qt::green;
+            r = Qt::yellow;
+            break;
+        }
+        default:{
+            l = Qt::green;
+            r = Qt::black;
+        }
+        }
+    }
+
+    if(this->light_type == 1||this->light_type==2){
+        switch (this->mz) {
+        case 0:{
+            l = Qt::red;
+            r = Qt::black;
+            break;
+        }
+        case 1:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
+        case 3:{
+            //cx
+            l = Qt::yellow;
+            r = Qt::yellow;
+            break;
+        }
+        case 4:{
+            //18
+            l = Qt::yellow;
+            r = Qt::white;
+            break;
+        }
+        default:{
+            l = Qt::red;
+            r = Qt::black;
+        }
+        }
+    }
+
+//    if(this->light_type==1){
+
+//    }
+
+    painter->setBrush(l);
     painter->drawEllipse(pos_x,pos_y,20,20);
-    painter->setBrush(Qt::black);
+    painter->setBrush(r);
     painter->drawEllipse(pos_x+20,pos_y,20,20);
 
     painter->setBrush(Qt::black);
-    painter->drawLine(QPoint(pos_x,pos_y),QPoint(pos_x,pos_y+30));
+    //painter->drawLine(QPoint(pos_x+stick_bias,pos_y),QPoint(pos_x+stick_bias,pos_y+30));
 
-
+    if(light_dir==1){
+        painter->drawLine(QPoint(pos_x+stick_bias,pos_y),QPoint(pos_x+stick_bias,pos_y+30));
+    }else{
+        painter->drawLine(QPoint(pos_x+stick_bias,pos_y-10),QPoint(pos_x+stick_bias,pos_y+20));
+    }
 
 
 }

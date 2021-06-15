@@ -13,6 +13,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
     QTimeLine *timeLine = new QTimeLine(1000);
+    int pos_x;
+    int pos_y = 100;
 
 protected:
     void advance(int phase) override;
@@ -20,8 +22,7 @@ private:
     qreal angle;
     qreal speed;
     qreal mouseEyeDirection;
-    int pos_x;
-    int pos_y = 100;
+
     int car_width = 110;
     int car_height = 60;
     QColor color;

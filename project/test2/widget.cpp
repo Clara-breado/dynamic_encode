@@ -9,76 +9,53 @@ Widget::Widget(QWidget *parent) :
     getStaticData();
 
     scene = new QGraphicsScene;
-    mytrain = new train(0,100);
-    train_1 = new logic_train(nullptr,0,60);
-//    bar[0] = new lightbars(0);
-//    bar[1] = new lightbars(200);
-//    bar[2] = new lightbars(400);
-//    bar[3] = new lightbars(600);
-//    bar[4] = new lightbars(800);
-//    bar[5] = new lightbars(1000);
-//    bar[6] = new lightbars(1200);
-//    bar[7] = new lightbars(1400);
+    mytrain = new train(140,600);
 
-//    lb[0] = new logic_lb(nullptr,0,0,200,45);
-//    lb[1] = new logic_lb(nullptr,200);
-//    lb[2] = new logic_lb(nullptr,400);
-//    lb[3] = new logic_lb(nullptr,600);
-//    lb[4] = new logic_lb(nullptr,800);
-//    lb[5] = new logic_lb(nullptr,1000);
-//    lb[6] = new logic_lb(nullptr,1200);
-//    lb[7] = new logic_lb(nullptr,1400);
+    //test case
+//    lightbars* test = new lightbars(3300,780,400,1);
+//    scene->addItem(test);
 
-    light[0] = new lights(0);
-    light[1] = new lights(200);
-    light[2] = new lights(400);
-    light[3] = new lights(600);
-    light[4] = new lights(800);
-    light[5] = new lights(1000);
-    light[6] = new lights(1200);
-    light[7] = new lights(1400);
-    light[8] = new lights(0,160);
+    //
 
-    scene->setSceneRect(-20, 0, 5000, 800); //meaning?
-    //scene->addItem(mytrain);
+    scene->setSceneRect(-20, 0, 5000, 800);
+    train_1 = new logic_train(nullptr,0,550);
+
     scene->addItem(train_1->view_train);
-//    scene->addItem(bar[0]);
-//    scene->addItem(bar[1]);
-//    scene->addItem(bar[2]);
-//    scene->addItem(bar[3]);
-//    scene->addItem(bar[4]);
-//    scene->addItem(bar[5]);
-//    scene->addItem(bar[6]);
-//    scene->addItem(bar[7]);
-    for(int i=0;i<50;i++){
+
+    for(int i=0;i<34;i++){
         scene->addItem(lb[i]->view_lb);
     }
+    for(int i=0;i<38;i++){
+        //scene->addItem(light[i]);
+        scene->addItem(lt[i]->view_lt);
+    }
 
-
-
-    scene->addItem(light[0]);
-    scene->addItem(light[1]);
-    scene->addItem(light[2]);
-    scene->addItem(light[3]);
-    scene->addItem(light[4]);
-    scene->addItem(light[5]);
-    scene->addItem(light[6]);
-    scene->addItem(light[7]);
-    scene->addItem(light[8]);
-
+    //scene->addItem(lt[0]->view_lt);
 
     QObject::connect(&train_1->mytimer, SIGNAL(timeout()), scene, SLOT(advance()));
 
     //logic run
-    for(int i = 0;i<8;i++){
+    for(int i = 0;i<19;i++){
         QObject::connect(&timer, SIGNAL(timeout()), lb[i], SLOT(timerTest()));
         QObject::connect(train_1,SIGNAL(sendPos(int,int)),lb[i],SLOT(changeState(int,int)));
+
     }
-    for(int i = 7;i>0;i--){
+    //进站咽喉
+//    QObject::connect(&timer, SIGNAL(timeout()),lb[0],SLOT(JzState()));
+//    QObject::connect(&timer, SIGNAL(timeout()),lb[14],SLOT(JzState()));
+
+    //区间光带
+    for(int i = 13;i>5;i--){
         QObject::connect(lb[i],SIGNAL(stateChanged(int)),lb[i-1],SLOT(toChangestate(int)));
     }
     QObject::connect(&timer,SIGNAL(timeout()),train_1,SLOT(timerStart()));
 
+    //区间信号机，接受下一区段码字
+    for(int i = 6;i<15;i++){
+        QObject::connect(lb[i],SIGNAL(stateChanged(int)),lt[i],SLOT(JM(int)));
+    }
+    QObject::connect(lb[0],SIGNAL(sendJzState(int)),lt[0],SLOT(JzJM(int)));
+    QObject::connect(lb[14],SIGNAL(sendJzState(int)),lt[14],SLOT(JzJM(int)));
 
 
     ui->graphicsView->setScene(scene);
@@ -147,15 +124,10 @@ void Widget::getStaticData(){
     int row_count = rows->property("Count").toInt();  //获取行数
     int column_count = columns->property("Count").toInt();  //获取列数
 
-    QAxObject *cell = work_sheet->querySubObject("Cells(int,int)", 3, 2);
-    QString cell_value = cell->property("Value2").toString();  //获取单元格内容
-    int a  = cell_value.toInt();
-    qDebug()<<a<<endl;
-
-    int line_dt[4];
+    int line_dt[5];
     for(int i=2; i<row_count; ++i)
     {
-        for(int j=2; j<=5; ++j)
+        for(int j=2; j<=6; ++j)
         {
             QAxObject *cell = work_sheet->querySubObject("Cells(int,int)", i, j);
             //QVariant cell_value = cell->property("Value");  //获取单元格内容
@@ -164,12 +136,42 @@ void Widget::getStaticData(){
         }
         int lb_x = int(line_dt[0]-0.5*line_dt[2]);
         int lb_y = line_dt[1]-5;
-        lb[i-2] = new logic_lb(nullptr,lb_x,lb_y,line_dt[2],line_dt[3]);
+        lb[i-2] = new logic_lb(nullptr,lb_x,lb_y,line_dt[2],line_dt[3],line_dt[4]);
     }
 
+    //初始化信号机
+    int line_dt_2[4];
+    work_sheet = work_book->querySubObject("Sheets(int)", 2);
+    used_range = work_sheet->querySubObject("UsedRange");
+    rows = used_range->querySubObject("Rows");
+    columns = used_range->querySubObject("Columns");
+    row_count = rows->property("Count").toInt();  //获取行数
+    column_count = columns->property("Count").toInt();  //获取列数
+    qDebug()<<row_count<<endl;
+    for(int i=2; i<row_count; ++i)
+    {
+        for(int j=2; j<=5; ++j)
+        {
+            QAxObject *cell = work_sheet->querySubObject("Cells(int,int)", i, j);
+            //QVariant cell_value = cell->property("Value");  //获取单元格内容
+            QString cell_value = cell->property("Value2").toString();  //获取单元格内容
+            line_dt_2[j-2] = cell_value.toInt();
+        }
+        light[i-2] = new lights(line_dt_2[0],line_dt_2[1],line_dt_2[2],line_dt_2[3]);
+        lt[i-2] = new logic_light(nullptr,line_dt_2[0],line_dt_2[1],line_dt_2[2],line_dt_2[3]);
 
+    }
 
 
     work_book->dynamicCall("Close(Boolean)", false);  //关闭文件
     excel.dynamicCall("Quit(void)");  //退出
+}
+
+void Widget::on_zx_recieve_clicked()
+{
+    lb[0]->jl_type = 0;
+    lb[0]->JZ_FLAG = true;
+
+    lb[14]->jl_type = 0;
+    lb[14]->JZ_FLAG = true;
 }

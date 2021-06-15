@@ -16,6 +16,7 @@ public:
 
 signals:
     void sendPos(int _pos_x,int _pos_y);
+    void sendPoint(QPointF train_pos);
 
 public slots:
 //    void toStop(bool stop_flag);

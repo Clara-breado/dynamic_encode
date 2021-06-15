@@ -6,7 +6,7 @@
 class lightbars : public QGraphicsItem
 {
 public:
-    lightbars(const int& _pos_x = 0,const int &_pos_y = 0,const int &_bar_width = 200,const int &_angle = 0);
+    lightbars(const int& _pos_x = 0,const int &_pos_y = 0,const int &_bar_width = 200,const int &_type = 0,const int &_logic_type = 0);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -27,8 +27,13 @@ private:
     int bound_x;
     int bound_y;
     int bias = 0;
+    int type;//0,1,2,3,4
+    int logic_type;
     QColor color;
     QPoint text_pos;
+
+    bool JZ_FLAG = false;
+    bool CZ_FLAG = false;
 
 
     int lst_state = state;

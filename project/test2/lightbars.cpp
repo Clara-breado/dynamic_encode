@@ -109,15 +109,57 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 break;
             }
 
-    case 10:{
+    case 20:{
             painter->drawText(text_pos,"B");
             color.setRgb(255,255,255);
             break;
     }
+//    case 21:{
+//            painter->drawText(text_pos,"L5");
+//            color.setRgb(0,108,0);
+//            break;
+//    }
+    case 30:{
+        painter->drawText(text_pos,"H");
+        color.setRgb(255,0,0);
+        break;
+    }
+    case 31:{
+        painter->drawText(text_pos,"UU");
+        color.setRgb(200,200,30);
+        break;
+    }
+    case 32:{
+        painter->drawText(text_pos,"U2");
+        color.setRgb(150,160,30);
+        break;
+    }
+    case 40:{
+        painter->drawText(text_pos,"H");
+        color.setRgb(255,0,0);
+        break;
+    }
+    case 41:{
+        painter->drawText(text_pos,"UUS");
+        color.setRgb(200,200,30);
+        break;
+    }
+    case 42:{
+        painter->drawText(text_pos,"U2S");
+        color.setRgb(150,160,30);
+        break;
+    }
     default:{
-                painter->drawText(text_pos,"L5");
-                color.setRgb(0,108,0);
-                break;
+                if(this->logic_type==2){
+                    //GD
+                    painter->drawText(text_pos,"HU");
+                    color.setRgb(255,69,0);
+                    break;
+                }else{
+                    painter->drawText(text_pos,"L5");
+                    color.setRgb(0,108,0);
+                    break;
+                }
             }
     }
 
@@ -191,10 +233,41 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
     }
 
-//    QRect rect(pos_x,pos_y,bar_width,bar_height);
-//    painter->setBrush(color);
+//    if(this->type==4){
+//        painter->setPen(Qt::red);
+//        painter->drawLine(QPoint(pos_x,pos_y),QPoint(pos_x,pos_y-360));
+//        painter->drawLine(QPoint(pos_x+395,pos_y),QPoint(pos_x+395,pos_y-360));
+//        painter->drawLine(QPoint(pos_x,pos_y),QPoint(pos_x+395,pos_y));
+//        painter->drawLine(QPoint(pos_x,pos_y-360),QPoint(pos_x+395,pos_y-360));
 
-//    rotateAndPaintRect(painter, rect, angle);
+//        painter->drawLine(QPoint(pos_x,pos_y-200),QPoint(pos_x,pos_y-360));
+//        painter->drawLine(QPoint(pos_x+575,pos_y-200),QPoint(pos_x+575,pos_y-360));
+//        painter->drawLine(QPoint(pos_x,pos_y-360),QPoint(pos_x+575,pos_y-360));
+//        painter->drawLine(QPoint(pos_x,pos_y-200),QPoint(pos_x+575,pos_y-200));
+
+//    }
+
+//    if(this->type==3){
+//        painter->setPen(Qt::red);
+//        painter->drawLine(QPoint(pos_x,pos_y),QPoint(pos_x,pos_y-360));
+//        painter->drawLine(QPoint(pos_x+395,pos_y),QPoint(pos_x+395,pos_y-360));
+//        painter->drawLine(QPoint(pos_x,pos_y),QPoint(pos_x+395,pos_y));
+//        painter->drawLine(QPoint(pos_x,pos_y-360),QPoint(pos_x+395,pos_y-360));
+
+//        painter->drawLine(QPoint(pos_x-180,pos_y-180),QPoint(pos_x-180,pos_y-360));
+//        painter->drawLine(QPoint(pos_x+395,pos_y-180),QPoint(pos_x+395,pos_y-360));
+//        painter->drawLine(QPoint(pos_x-180,pos_y-360),QPoint(pos_x+395,pos_y-360));
+//        painter->drawLine(QPoint(pos_x-180,pos_y-180),QPoint(pos_x+395,pos_y-180));
+
+//    }
+
+
+//    if(x>this->pos_x && x <this->pos_x+400 && y<20 && y >(20-360)){
+//        flag = true;
+//    }
+//    if(x>this->pos_x && x<this->pos_x+575 && y<(20-250) && y>(20-360)){
+//        flag = true;
+//    }
 
 }
 

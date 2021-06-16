@@ -34,6 +34,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="lg_recieve">
+       <property name="text">
+        <string>18号接车</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="cx_send">
        <property name="font">
         <font>
@@ -62,6 +69,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="lg_send">
+       <property name="text">
+        <string>18号发车</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="start_btn">
        <property name="font">
         <font>
@@ -86,13 +100,6 @@
        </property>
        <property name="text">
         <string>STOP</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>PushButton</string>
        </property>
       </widget>
      </item>

@@ -45,7 +45,7 @@ Widget::Widget(QWidget *parent) :
 //    QObject::connect(&timer, SIGNAL(timeout()),lb[14],SLOT(JzState()));
 
     //区间光带
-    for(int i = 13;i>5;i--){
+    for(int i = 14;i>4;i--){
         QObject::connect(lb[i],SIGNAL(stateChanged(int)),lb[i-1],SLOT(toChangestate(int)));
     }
     QObject::connect(&timer,SIGNAL(timeout()),train_1,SLOT(timerStart()));
@@ -56,7 +56,14 @@ Widget::Widget(QWidget *parent) :
     }
     QObject::connect(lb[0],SIGNAL(sendJzState(int)),lt[0],SLOT(JzJM(int)));
     QObject::connect(lb[14],SIGNAL(sendJzState(int)),lt[14],SLOT(JzJM(int)));
+    QObject::connect(lb[4],SIGNAL(sendCzState(int,int)),lt[4],SLOT(CzJM(int,int)));
+    QObject::connect(lb[4],SIGNAL(sendCzState(int,int)),lt[34],SLOT(CzJM(int,int)));
+    QObject::connect(lb[4],SIGNAL(sendCzState(int,int)),lt[35],SLOT(CzJM(int,int)));
 
+
+    for(int i=1;i<4;i++){
+        QObject::connect(lb[4],SIGNAL(closeGUDAO()),lb[i],SLOT(toCloseGUDAO()));
+    }
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -67,7 +74,7 @@ Widget::Widget(QWidget *parent) :
 //    ui->graphicsView->resize(800, 600);
     ui->graphicsView->show();
 
-    //timer.start(1000/33);
+    timer.start(1000/33);
 
     //todo :pre light --> nxt lightbar && light --> train(through lightbar? redlight send signal to train)
 
@@ -79,31 +86,22 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
-    //timer.stop();
+    timer.stop();
 }
 
-void Widget::on_pushButton_clicked()
-{
-
-}
 
 void Widget::on_start_btn_clicked()
 {
 
     //todo use btn to control
    train_1->mytimer.start(1000/33);
-    timer.start(1000/33);
+    //timer.start(1000/33);
 }
 
 void Widget::on_stop_btn_clicked()
 {
     train_1->mytimer.stop();
-    timer.stop();
-}
-
-void Widget::on_zx_send_clicked()
-{
-
+    //timer.stop();
 }
 
 void Widget::getStaticData(){
@@ -174,4 +172,61 @@ void Widget::on_zx_recieve_clicked()
 
     lb[14]->jl_type = 0;
     lb[14]->JZ_FLAG = true;
+
+    train_1->view_train->move_type = 1;
 }
+
+void Widget::on_cx_recieve_clicked()
+{
+    lb[0]->jl_type = 1;
+    lb[0]->JZ_FLAG = true;
+
+    lb[14]->jl_type = 1;
+    lb[14]->JZ_FLAG = true;
+
+    train_1->view_train->move_type = 2;
+}
+
+void Widget::on_lg_recieve_clicked()
+{
+    lb[0]->jl_type = 2;
+    lb[0]->JZ_FLAG = true;
+
+    lb[14]->jl_type = 2;
+    lb[14]->JZ_FLAG = true;
+
+    train_1->view_train->move_type = 3;
+
+}
+
+void Widget::on_zx_send_clicked()
+{
+    lb[4]->CZ_FLAG = true;
+    lb[4]->jl_type = 1;
+
+    lb[1]->view_lb->state = 8;
+
+    train_1->view_train->move_type = 4;
+}
+
+void Widget::on_cx_send_clicked()
+{
+    lb[4]->CZ_FLAG = true;
+    lb[4]->jl_type = 2;
+
+    lb[2]->view_lb->state = 31;
+
+    train_1->view_train->move_type = 5;
+}
+
+void Widget::on_lg_send_clicked()
+{
+    lb[4]->CZ_FLAG = true;
+    lb[4]->jl_type = 3;
+
+    lb[3]->view_lb->state = 41;
+
+    train_1->view_train->move_type = 6;
+}
+
+

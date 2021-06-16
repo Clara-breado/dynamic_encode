@@ -28,55 +28,9 @@ void train::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-
-
     painter->setBrush(Qt::yellow);
-//    painter->drawRect(QRectF(-10,20,40,25));
     painter->drawRect(pos_x,pos_y,40,25);
 
-//    QPixmap img1;
-//    painter->drawPixmap(-10,-20,40,25,img1);
-
-//    // Body
-//    painter->setBrush(color);
-//    painter->drawEllipse(-10, -20, 20, 40);
-
-//    // Eyes
-//    painter->setBrush(Qt::white);
-//    painter->drawEllipse(-10, -17, 8, 8);
-//    painter->drawEllipse(2, -17, 8, 8);
-
-//    // Nose
-//    painter->setBrush(Qt::black);
-//    painter->drawEllipse(QRectF(-2, -22, 4, 4));
-
-//    // Pupils
-//    painter->drawEllipse(QRectF(-8.0 + mouseEyeDirection, -17, 4, 4));
-//    painter->drawEllipse(QRectF(4.0 + mouseEyeDirection, -17, 4, 4));
-
-//    // Ears
-//    painter->setBrush(scene()->collidingItems(this).isEmpty() ? Qt::green : Qt::red);
-//    if(scene()->collidingItems(this).isEmpty()){
-//        //no collid
-//        painter->setBrush(Qt::darkBlue);
-//    }else if(scene()->collidingItems(this).size()==1){
-//        painter->setBrush(Qt::green);
-//    }else if(scene()->collidingItems(this).size()==2){
-//        painter->setBrush(Qt::red);
-//    }else if(scene()->collidingItems(this).size()==3){
-//        painter->setBrush(Qt::white);
-//    }
-//    //scene()->collidingItems(this).size()>2;
-//    painter->drawEllipse(-17, -12, 16, 16);
-//    painter->drawEllipse(1, -12, 16, 16);
-
-//    // Tail
-//    QPainterPath path(QPointF(0, 20));
-//    path.cubicTo(-5, 22, -5, 22, 0, 25);
-//    path.cubicTo(5, 27, 5, 32, 0, 30);
-//    path.cubicTo(-5, 32, -5, 42, 0, 35);
-//    painter->setBrush(Qt::NoBrush);
-//    painter->drawPath(path);
 
     //bouding rect
     painter->setBrush(Qt::NoBrush);
@@ -91,6 +45,91 @@ void train::advance(int phase){
     //setPos(pos_x,pos_y);
 
     //setX(pos_x);
-    setX(this->pos().x()+1);
-    //timeLine->start();
+
+    //setX(this->pos().x()+1);
+
+
+    //test斜线
+
+        qDebug()<<this->pos().x()<<endl;
+
+//咽喉区2
+//    if(this->pos().x()>=3280 && this->pos().x()<3450){
+//        if(move_type == 2){
+//            setX(this->pos().x()+0.7);
+//            setY(this->pos().y()-0.7);
+//        }else{
+//            setX(this->pos().x()+1);
+//        }
+//    }else{
+//        setX(this->pos().x()+1);
+//    }
+
+    switch (move_type) {
+    case 0:{
+        //0应该是禁止前进
+        break;
+    }
+    case 1:{
+        //正线
+        setX(this->pos().x()+1);
+        break;
+    }
+    case 2:{
+        //侧线进站
+        if((this->pos().x()>=3280 && this->pos().x()<3450)||(this->pos().x()>=280 && this->pos().x()<480)){
+                setX(this->pos().x()+0.7);
+                setY(this->pos().y()-0.7);
+        }else{
+            setX(this->pos().x()+1);
+        }
+        break;
+    }
+    case 3:{
+        //18进站
+        if((this->pos().x()>=3280 && this->pos().x()<3630)||(this->pos().x()>=280 && this->pos().x()<625)){
+                setX(this->pos().x()+0.7);
+                setY(this->pos().y()-0.7);
+        }else{
+            setX(this->pos().x()+1);
+        }
+        break;
+    }
+    case 4:{
+        //正线
+        setX(this->pos().x()+1);
+        break;
+    }
+    case 5:{
+        //侧线出站
+        if(this->pos().x()>=910 && this->pos().x()<1080){
+                setX(this->pos().x()+0.7);
+                setY(this->pos().y()+0.7);
+        }else{
+            setX(this->pos().x()+1);
+        }
+        break;
+    }
+    case 6:{
+        //18出站
+        if(this->pos().x()>=740 && this->pos().x()<1080){
+                setX(this->pos().x()+0.7);
+                setY(this->pos().y()+0.7);
+        }else{
+            setX(this->pos().x()+1);
+        }
+        break;
+    }
+    default:{
+
+    }
+    }
+
+
+//    if(move_type == 2){
+//        setX(this->pos().x()+0.7);
+//        setY(this->pos().y()-0.7);
+//    }else{
+//        setX(this->pos().x()+1);
+//    }
 }

@@ -14,6 +14,8 @@ public:
 signals:
     void stateChanged(int _state);
     void sendJzState(int _jl_type);
+    void sendCzState(int _state,int _jl_type);
+    void closeGUDAO();
 
 public slots:
     void toChangestate(int _nxtstate);
@@ -22,6 +24,8 @@ public slots:
     void timerTest();
 
     void JzState();
+    void CzState();
+    void toCloseGUDAO();
 
 private:
     int id;
@@ -34,6 +38,7 @@ private:
     int lb_type = 0;//qj--0,jz--1,gd--2,cz--3
     int view_type = 0;
     int bar_width;
+    int nxt_state=0;
 
     bool lb_used(int x,int y);
 

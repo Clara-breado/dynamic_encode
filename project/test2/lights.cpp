@@ -50,14 +50,32 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
             r = Qt::yellow;
             break;
         }
+        case 30:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
+        case 31:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
+        case 40:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
+        case 41:{
+            l = Qt::yellow;
+            r = Qt::black;
+            break;
+        }
         default:{
             l = Qt::green;
             r = Qt::black;
         }
         }
-    }
-
-    if(this->light_type == 1||this->light_type==2){
+    }else{
         switch (this->mz) {
         case 0:{
             l = Qt::red;
@@ -81,16 +99,18 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
             r = Qt::white;
             break;
         }
+        case 5:{
+            l = Qt::green;
+            r = Qt::black;
+            break;
+        }
         default:{
             l = Qt::red;
             r = Qt::black;
         }
         }
+
     }
-
-//    if(this->light_type==1){
-
-//    }
 
     painter->setBrush(l);
     painter->drawEllipse(pos_x,pos_y,20,20);

@@ -31,15 +31,22 @@ public:
     logic_train *train_1;
 
 private slots:
-    void on_pushButton_clicked();
 
     void on_start_btn_clicked();
 
     void on_stop_btn_clicked();
 
-    void on_zx_send_clicked();
-
     void on_zx_recieve_clicked();
+
+    void on_cx_recieve_clicked();
+
+    void on_lg_recieve_clicked();
+
+    void on_cx_send_clicked();
+
+    void on_lg_send_clicked();
+
+    void on_zx_send_clicked();
 
 private:
     void getStaticData();
@@ -49,6 +56,8 @@ private:
     lightbars *bar[50];
     lights *light[40];
     QString filePath = "G:\\gradethree\\static_db_1.xlsx";
+    //QString filePath = "G:\\gradethree\\test2\\test2.xlsx";
+
     QTimer timer;
 };
 

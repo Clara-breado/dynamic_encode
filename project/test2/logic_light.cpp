@@ -33,3 +33,16 @@ void logic_light::JzJM(int _mz){
     }
     }
 }
+
+void logic_light::CzJM(int _mz,int _jl){
+    //L/H
+    if(_jl==-1) this->view_lt->mz = 0;
+    if(_jl==this->light_type){
+        if(_mz==0){
+            this->view_lt->mz = 0;
+        }else{
+            this->view_lt->mz = 5;
+        }
+    }
+
+}

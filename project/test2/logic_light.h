@@ -15,6 +15,7 @@ public:
 public slots:
     void JM(int _mz);
     void JzJM(int _mz);
+    void CzJM(int _mz,int _jl);
 
 private:
     int pos_x;

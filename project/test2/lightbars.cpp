@@ -8,7 +8,8 @@ lightbars::lightbars(const int& _pos_x,const int &_pos_y,const int &_bar_width,c
 {
     bound_x = pos_x;
     bound_y = pos_y;
-    text_pos = QPoint(pos_x+100,pos_y+40);
+    text_pos = QPoint(pos_x+0.5*bar_width-5,pos_y+40);
+
 }
 
 QRectF lightbars::boundingRect() const
@@ -25,43 +26,12 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-//    switch (this->logic_type) {
-//        //区间
-//    case 0:{
-//        break;
-//    }
-//        //进站咽喉
-//    case 1:{
-//        if(JZ_FLAG){
-//            break;
-//        }else{
-//            //B
-//            this->state = 10;
-//            break;
-//        }
-//    }
-//        //股道
-//    case 2:{
-//        break;
-//    }
-//        //出站咽喉
-//    case 3:{
-//        if(CZ_FLAG){
-//            break;
-//        }else{
-//            //B
-//            this->state = 10;
-//            break;
-//        }
-//    }
-//    default:{
-//        this->state = 10;
-//    }
-//    }
-
-
-
-
+    painter->setPen(Qt::white);
+    QFont mzFont;
+    mzFont.setPixelSize(20);
+    mzFont.setBold(true);
+    mzFont.setFamily("Bahnschrift SemiBold");
+    painter->setFont(mzFont);
 
     switch (this->state) {
     case 0: {
@@ -114,11 +84,7 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
             color.setRgb(255,255,255);
             break;
     }
-//    case 21:{
-//            painter->drawText(text_pos,"L5");
-//            color.setRgb(0,108,0);
-//            break;
-//    }
+
     case 30:{
         painter->drawText(text_pos,"H");
         color.setRgb(255,0,0);
@@ -162,7 +128,6 @@ void lightbars::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 }
             }
     }
-
 
     switch(this->type){
     case 0:{

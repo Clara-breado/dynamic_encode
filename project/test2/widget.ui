@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>动态编码仿真</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -21,27 +21,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="zx_recieve">
-       <property name="text">
-        <string>正线接车</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="cx_recieve">
-       <property name="text">
-        <string>侧线接车</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="lg_recieve">
-       <property name="text">
-        <string>18号接车</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="cx_send">
        <property name="font">
         <font>
          <family>等线</family>
@@ -49,8 +28,51 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(147,112,219);
+
+color:white;</string>
+       </property>
        <property name="text">
-        <string>侧线发车</string>
+        <string>正线接车</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cx_recieve">
+       <property name="font">
+        <font>
+         <family>等线</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(138,43,226);
+
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>侧线接车</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="lg_recieve">
+       <property name="font">
+        <font>
+         <family>等线</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(153,50,204);
+
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>18号接车</string>
        </property>
       </widget>
      </item>
@@ -63,13 +85,49 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(147,112,219);
+
+color:white;</string>
+       </property>
        <property name="text">
         <string>正线发车</string>
        </property>
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="cx_send">
+       <property name="font">
+        <font>
+         <family>等线</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(138,43,226);
+
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>侧线发车</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="lg_send">
+       <property name="font">
+        <font>
+         <family>等线</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(153,50,204);
+
+color:white;</string>
+       </property>
        <property name="text">
         <string>18号发车</string>
        </property>
@@ -84,6 +142,11 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(178,34,34);
+
+color:white;</string>
+       </property>
        <property name="text">
         <string>RUN</string>
        </property>
@@ -97,6 +160,11 @@
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:rgb(102,139,139);
+
+color:white;</string>
        </property>
        <property name="text">
         <string>STOP</string>

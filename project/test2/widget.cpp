@@ -1,5 +1,7 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QFileInfo>
+#include <QDir>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -10,12 +12,6 @@ Widget::Widget(QWidget *parent) :
 
     scene = new QGraphicsScene;
     mytrain = new train(140,600);
-
-    //test case
-//    lightbars* test = new lightbars(3300,780,400,1);
-//    scene->addItem(test);
-
-    //
 
     scene->setSceneRect(-20, 0, 5000, 800);
     train_1 = new logic_train(nullptr,0,550);
@@ -30,8 +26,6 @@ Widget::Widget(QWidget *parent) :
         scene->addItem(lt[i]->view_lt);
     }
 
-    //scene->addItem(lt[0]->view_lt);
-
     QObject::connect(&train_1->mytimer, SIGNAL(timeout()), scene, SLOT(advance()));
 
     //logic run
@@ -40,9 +34,6 @@ Widget::Widget(QWidget *parent) :
         QObject::connect(train_1,SIGNAL(sendPos(int,int)),lb[i],SLOT(changeState(int,int)));
 
     }
-    //进站咽喉
-//    QObject::connect(&timer, SIGNAL(timeout()),lb[0],SLOT(JzState()));
-//    QObject::connect(&timer, SIGNAL(timeout()),lb[14],SLOT(JzState()));
 
     //区间光带
     for(int i = 14;i>4;i--){
@@ -67,20 +58,14 @@ Widget::Widget(QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setBackgroundBrush(Qt::cyan);
+    ui->graphicsView->setBackgroundBrush(Qt::black);
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-//    ui->graphicsView->resize(800, 600);
+
     ui->graphicsView->show();
 
     timer.start(1000/33);
-
-    //todo :pre light --> nxt lightbar && light --> train(through lightbar? redlight send signal to train)
-
-    //connect(bar[0],SIGNAL(lightbars::lbChange(int)),bar[1],SLOT(lightbars::lbSet(int)));
-//    QObject::connect(bar[0],lightbars::lbChange(int),bar[1],lightbars::lbSet(1));
-
 }
 
 Widget::~Widget()
@@ -174,6 +159,10 @@ void Widget::on_zx_recieve_clicked()
     lb[14]->JZ_FLAG = true;
 
     train_1->view_train->move_type = 1;
+
+    //update view
+    lb[14]->timerTest();
+    ui->graphicsView->viewport()->update();
 }
 
 void Widget::on_cx_recieve_clicked()
@@ -185,6 +174,10 @@ void Widget::on_cx_recieve_clicked()
     lb[14]->JZ_FLAG = true;
 
     train_1->view_train->move_type = 2;
+
+    //update view
+    lb[14]->timerTest();
+    ui->graphicsView->viewport()->update();
 }
 
 void Widget::on_lg_recieve_clicked()
@@ -197,6 +190,10 @@ void Widget::on_lg_recieve_clicked()
 
     train_1->view_train->move_type = 3;
 
+    //update view
+    lb[14]->timerTest();
+    ui->graphicsView->viewport()->update();
+
 }
 
 void Widget::on_zx_send_clicked()
@@ -207,6 +204,10 @@ void Widget::on_zx_send_clicked()
     lb[1]->view_lb->state = 8;
 
     train_1->view_train->move_type = 4;
+
+    //update view
+    lb[4]->timerTest();
+    ui->graphicsView->viewport()->update();
 }
 
 void Widget::on_cx_send_clicked()
@@ -217,6 +218,10 @@ void Widget::on_cx_send_clicked()
     lb[2]->view_lb->state = 31;
 
     train_1->view_train->move_type = 5;
+
+    //update view
+    lb[4]->timerTest();
+    ui->graphicsView->viewport()->update();
 }
 
 void Widget::on_lg_send_clicked()
@@ -226,7 +231,13 @@ void Widget::on_lg_send_clicked()
 
     lb[3]->view_lb->state = 41;
 
+
     train_1->view_train->move_type = 6;
+
+    //update view
+    lb[4]->timerTest();
+    ui->graphicsView->viewport()->update();
+
 }
 
 

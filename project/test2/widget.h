@@ -55,6 +55,7 @@ private:
     train *mytrain;
     lightbars *bar[50];
     lights *light[40];
+    QString filePath2 = "../database.xlsx";
     QString filePath = "G:\\gradethree\\static_db_1.xlsx";
     //QString filePath = "G:\\gradethree\\test2\\test2.xlsx";
 

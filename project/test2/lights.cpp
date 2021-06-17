@@ -33,6 +33,8 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     l = Qt::gray;
     r = Qt::gray;
 
+    painter->setPen(Qt::white);
+
     if(this->light_type==0){
         switch (this->mz-1) {
         case 0:{

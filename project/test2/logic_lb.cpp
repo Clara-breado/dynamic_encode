@@ -10,16 +10,24 @@ void logic_lb::getState(){
         //cx12: 3--LU     30--HU     31--UU   32--U2
         if(this->state>=32 && this->state<40) this->state -= 30;
         //cx18: 3--LU     40--HU     41--UUS  42--U2S
-        if(this->state>=42) this->state -= 40;
+        if(this->state>=42 && this->state<50) this->state -= 40;
+        //yd 51--HB 52=2--U
+        if(this->YD_FLAG) this->state = 50;
+        if(this->state>=51) this->state -= 50;
 
         if(this->state>=20 && this->state<30) this->state -= 20;
-    emit stateChanged(this->train_flag == true?0:this->state);
+
+        int send_state = this->state;
+        if(this->view_lb->gzFlag){
+            this->view_lb->state = 0;//H
+            send_state = 0;//HU
+        }else if(this->train_flag){
+            send_state = 0;
+        }
+    emit stateChanged(send_state);
 }
 
 void logic_lb::toChangestate(int _nxtstate){
-//    if(this->train_flag==true){
-//        this->view_lb->state = 0;
-//    }else{
     this->nxt_state = _nxtstate;    //storage
 
     if(this->lb_type!=3){
@@ -34,19 +42,6 @@ void logic_lb::toChangestate(int _nxtstate){
 
 void logic_lb::changeState(int car_pos_x,int car_pos_y){
     train_flag = lb_used(car_pos_x,car_pos_y);
-    if(this->train_flag==true){
-//        qDebug()<<this->lb_type<<endl;
-        //this->view_lb->state = 0;
-    }
-    else {
-        train_flag = false;
-        //this->view_lb->state = 8;
-    }
-
-}
-
-void logic_lb::change(QPointF car_pos){
-    qreal x = this->view_lb->mapToParent(car_pos).x();
 }
 
 void logic_lb::timerTest(){
@@ -88,7 +83,7 @@ void logic_lb::JzState(){
             this->state = 20;
         }
     }
-    emit sendJzState(jl_type);
+    emit sendJzState(YD_FLAG?3:jl_type);
 }
 
 void logic_lb::CzState(){
@@ -109,7 +104,7 @@ void logic_lb::CzState(){
             this->view_lb->state = 20;//B
         }
     }
-    emit sendCzState(this->state,this->jl_type);
+    emit sendCzState(YD_FLAG?100:state,jl_type);
 }
 
 void logic_lb::toCloseGUDAO(){

@@ -28,6 +28,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">background:rgb(147,112,219);
 
@@ -84,6 +87,9 @@ color:white;</string>
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background:rgb(147,112,219);

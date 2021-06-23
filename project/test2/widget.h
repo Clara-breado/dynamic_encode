@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QMenu>
+#include <QAction>
 #include <QGraphicsScene>
 #include <QAxObject>
 #include <QDebug>
@@ -13,6 +15,7 @@
 #include "logic_train.h"
 #include "logic_light.h"
 #include "setting.h"
+#include "myscene.h"
 
 namespace Ui {
 class Widget;
@@ -48,14 +51,26 @@ private slots:
 
     void on_zx_send_clicked();
 
+    void on_zx_send_customContextMenuRequested(const QPoint &pos);
+    void testMenu();
+    void r_YD();
+    void showMenu(const QPoint &pos);
+    void showJCMenu(const QPoint &pos);
+    void on_zx_recieve_customContextMenuRequested(const QPoint &pos);
+
 private:
     void getStaticData();
+
+    QMenu *m_menu;
+    QMenu *r_menu;
+
+    QAction *m_yd;
+    QAction *r_yd;
+
+
     Ui::Widget *ui;
-    QGraphicsScene *scene;
-    train *mytrain;
-    lightbars *bar[50];
-    lights *light[40];
-    QString filePath2 = "../database.xlsx";
+    myscene *scene;
+    //QGraphicsScene *scene;
     QString filePath = "G:\\gradethree\\static_db_1.xlsx";
     //QString filePath = "G:\\gradethree\\test2\\test2.xlsx";
 

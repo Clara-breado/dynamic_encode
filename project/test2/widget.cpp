@@ -8,14 +8,28 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    m_menu = new QMenu(this);
+    r_menu = new QMenu(this);
+    m_yd = new QAction(this);
+    r_yd = new QAction(this);
+    m_yd->setText("引导发车");
+    r_yd->setText("引导接车");
+    m_menu->addAction(m_yd);
+    r_menu->addAction(r_yd);
+    connect(m_yd,SIGNAL(triggered()),this,SLOT(testMenu()));
+    connect(r_yd,SIGNAL(triggered()),this,SLOT(r_YD()));
+
+
+    setContextMenuPolicy(Qt::ActionsContextMenu);
+    m_menu->show();
+
     getStaticData();
 
-    scene = new QGraphicsScene;
-    mytrain = new train(140,600);
+    //scene = new QGraphicsScene;
+    scene = new myscene;
 
     scene->setSceneRect(-20, 0, 5000, 800);
     train_1 = new logic_train(nullptr,0,550);
-
     scene->addItem(train_1->view_train);
 
     for(int i=0;i<34;i++){
@@ -39,6 +53,7 @@ Widget::Widget(QWidget *parent) :
     for(int i = 14;i>4;i--){
         QObject::connect(lb[i],SIGNAL(stateChanged(int)),lb[i-1],SLOT(toChangestate(int)));
     }
+
     QObject::connect(&timer,SIGNAL(timeout()),train_1,SLOT(timerStart()));
 
     //区间信号机，接受下一区段码字
@@ -94,11 +109,23 @@ void Widget::getStaticData(){
     excel.setProperty("Visible", false);
     QAxObject *work_books = excel.querySubObject("WorkBooks");
     work_books->dynamicCall("Open (const QString&)", filePath);
+
+    QAxObject *work_books2 = excel.querySubObject("WorkBooks");
+    QAxObject *work_book2 = excel.querySubObject("ActiveWorkBook");
+//    work_books2->dynamicCall("Open (const QString&)", filePath2);
+
+    QString fileName = "../static_db_1.xlsx";
+    QFileInfo info(fileName);
+    if (!info.exists())
+        return;
+    work_book2 = work_books2->querySubObject("Open(const QString &)", info.absoluteFilePath());
+
+    qDebug()<<info.absoluteFilePath()<<endl;
     QAxObject *work_book = excel.querySubObject("ActiveWorkBook");
     QAxObject *work_sheets = work_book->querySubObject("Sheets");  //Sheets也可换用WorkSheets
 
     //初始化光带
-    QAxObject *work_sheet = work_book->querySubObject("Sheets(int)", 1);
+    QAxObject *work_sheet = work_book2->querySubObject("Sheets(int)", 1);
     QAxObject *used_range = work_sheet->querySubObject("UsedRange");
     QAxObject *rows = used_range->querySubObject("Rows");
     QAxObject *columns = used_range->querySubObject("Columns");
@@ -124,7 +151,7 @@ void Widget::getStaticData(){
 
     //初始化信号机
     int line_dt_2[4];
-    work_sheet = work_book->querySubObject("Sheets(int)", 2);
+    work_sheet = work_book2->querySubObject("Sheets(int)", 2);
     used_range = work_sheet->querySubObject("UsedRange");
     rows = used_range->querySubObject("Rows");
     columns = used_range->querySubObject("Columns");
@@ -140,7 +167,6 @@ void Widget::getStaticData(){
             QString cell_value = cell->property("Value2").toString();  //获取单元格内容
             line_dt_2[j-2] = cell_value.toInt();
         }
-        light[i-2] = new lights(line_dt_2[0],line_dt_2[1],line_dt_2[2],line_dt_2[3]);
         lt[i-2] = new logic_light(nullptr,line_dt_2[0],line_dt_2[1],line_dt_2[2],line_dt_2[3]);
 
     }
@@ -241,3 +267,53 @@ void Widget::on_lg_send_clicked()
 }
 
 
+
+void Widget::on_zx_send_customContextMenuRequested(const QPoint &pos)
+{
+    showMenu(pos);
+}
+
+void Widget::showMenu(const QPoint &pos){
+    //qDebug()<<"cliked!"<<endl;
+    int wid = ui->zx_send->width();
+    int x = ui->zx_send->pos().x();
+    int p_x = x+wid;
+    int p_y = ui->zx_send->pos().y();
+    QPoint tmp(p_x,p_y);
+
+    m_menu->exec(mapToGlobal(tmp));
+}
+
+void Widget::showJCMenu(const QPoint &pos){
+    int wid = ui->zx_recieve->width();
+    int x = ui->zx_recieve->pos().x();
+    int p_x = x+wid;
+    int p_y = ui->zx_recieve->pos().y();
+    QPoint tmp(p_x,p_y);
+
+    r_menu->exec(mapToGlobal(tmp));
+}
+
+void Widget::testMenu(){
+    //股道HB，咽喉B
+    lb[4]->jl_type = 1;
+    lb[4]->YD_FLAG = true;
+    lb[1]->view_lb->state = 51;
+    lb[4]->view_lb->state = 20;
+}
+
+void Widget::r_YD(){
+    //咽喉：B    一接近：HB
+    qDebug()<<"cliked!"<<endl;
+    lb[14]->YD_FLAG = true;
+    lb[14]->JZ_FLAG = true;
+    lb[14]->jl_type = 3;
+    lb[14]->getState();
+    //lb[13]->view_lb->state = 50;
+//    lb[10]->gz_flag = true;
+//    lb[11]->getState();
+}
+void Widget::on_zx_recieve_customContextMenuRequested(const QPoint &pos)
+{
+    showJCMenu(pos);
+}

@@ -106,6 +106,11 @@ void lights::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
             r = Qt::black;
             break;
         }
+        case 6:{
+            l = Qt::red;
+            r = Qt::white;
+            break;
+        }
         default:{
             l = Qt::red;
             r = Qt::black;

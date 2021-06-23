@@ -7,7 +7,7 @@
 QT       += core gui
 QT       += axcontainer
 RC_ICONS = train.ico
-
+RESOURCES += res.qrc
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = test2
@@ -33,6 +33,7 @@ SOURCES += \
         logic_light.cpp \
         logic_train.cpp \
         main.cpp \
+        myscene.cpp \
         train.cpp \
         widget.cpp
 
@@ -42,6 +43,7 @@ HEADERS += \
         logic_lb.h \
         logic_light.h \
         logic_train.h \
+        myscene.h \
         setting.h \
         train.h \
         widget.h
@@ -56,3 +58,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+DISTFILES += \
+    static_db_1.xlsx

@@ -11,10 +11,10 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     int usedFlag = false;
     int state = 9;
-
+    bool gzFlag = false;
 private:
     qreal speed;
     qreal mouseEyeDirection;
